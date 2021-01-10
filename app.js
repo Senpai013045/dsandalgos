@@ -108,3 +108,108 @@ console.log(
   "The number of unique values in this array is: ",
   countUniqueValuesInThisArray([1, 2, 2, 2, 2, 3, 3, 3])
 );
+//sliding window pattern
+/*
+calculate the maxSubarraySum
+maxSubarraySum([1,2,5,2,8,1,5],2) // 10
+maxSubarraySum([1,2,5,2,8,1,5],4) // 17
+maxSubarraySum([4,2,1,6],1) // 6
+maxSubarraySum([4,2,1,6,2],4) // 13
+maxSubarraySum([],4) // null
+*/
+
+function maxSubarraySum(numberArray, numberOfConsecutiveValues) {
+  //edge case first
+  if (numberOfConsecutiveValues > numberArray.length) {
+    return null;
+  }
+
+  let maximumSum = 0;
+  let temporarySum = 0;
+
+  for (let i = 0; i < numberOfConsecutiveValues; i++) {
+    //i<numberOfConsecutiveValue cause array are 0 indexed
+    temporarySum += numberArray[i];
+  }
+  maximumSum = temporarySum;
+
+  for (let i = numberOfConsecutiveValues; i < numberArray.length; i++) {
+    temporarySum =
+      temporarySum +
+      numberArray[i] -
+      numberArray[i - numberOfConsecutiveValues];
+    maximumSum = Math.max(temporarySum, maximumSum);
+  }
+  return maximumSum;
+}
+
+console.log(
+  "The largest consecutive sum log: ",
+  maxSubarraySum([1, 8, 1, 2, 3, 5, 2, 0], 2)
+);
+
+//recursive function
+
+function addAllNumbersBetweenOneTo(n) {
+  if (n === 1) return 1;
+  return n + addAllNumbersBetweenOneTo(n - 1);
+}
+
+console.log(
+  "The sum of all numbers between 1 to 5 is",
+  addAllNumbersBetweenOneTo(5)
+);
+
+//visual explainination
+/*
+addAllNumbersBetweenOneTo(5)
+
+is 5 equal to 1? no so keep going
+
+return 5 + addAllNumbersBetweenOneTo(4)
+
+is 4 equal to 1? no so keep going
+
+return 4 + addAllNumbersBetweenOneTo(3)
+
+is 3 equal to 1? no so keep going
+
+return 3 + addAllNumbersBetweenOneTo(2)
+
+is 2 equal to 1? no so keep going
+
+return 2 + addAllNumbersBetweenOneTo(1)
+
+is 1 equal to 1? Yes! so return 1
+
+return 2 + 1
+
+//lets see one simple example
+
+we now know addAllNumbersBetweenOneTo(1) = 1
+
+addAllNumbersBetweenOneTo(2)= 2 + addAllNumbersBetweenOneTo(2-1) 
+                            = 2+1
+                            = 3
+
+addAllNumbersBetweenOneTo(3)= 3 + addAllNumbersBetweenOneTo(3-1) 
+                            = 3 + addAllNumbersBetweenOneTo(2) 
+                            = 3 + 3
+                            = 6
+
+//you can work your way upwards in this way
+*/
+
+//recursive factorial function
+
+function recursiveFactorial(n) {
+  //base case of 1
+  if (n === 1) return 1;
+  //changing input
+  return n * recursiveFactorial(n - 1);
+}
+
+console.log(
+  "Factorial of 5 using recursive function is: ",
+  recursiveFactorial(5)
+);

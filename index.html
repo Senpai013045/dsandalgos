@@ -168,6 +168,172 @@ console.log(
 );
           </pre>
         </section>
+        <section class="section">
+          <h2 class="heading__secondary">Sliding window pattern</h2>
+          <p class="text">
+            This pattern involves creating a window which can either be an array
+            or number from one position to another Depending on a certain
+            condition, the window either increases or closes (and a new window
+            is created) Very useful for keeping track of a subset of data in an
+            array/string etc.
+          </p>
+          <p class="text">
+            Consider the problem: Write a function called maxSubarraySum which
+            accepts an array of integers and a number called n. The function
+            should calculate the maximum sum of n consecutive elements in the
+            array.
+          </p>
+          <pre class="code">
+/*
+calculate the maxSubarraySum
+maxSubarraySum([1,2,5,2,8,1,5],2) // 10
+maxSubarraySum([1,2,5,2,8,1,5],4) // 17
+maxSubarraySum([4,2,1,6],1) // 6
+maxSubarraySum([4,2,1,6,2],4) // 13
+maxSubarraySum([],4) // null
+*/
+
+function maxSubarraySum(numberArray, numberOfConsecutiveValues) {
+  //edge case first
+  if (numberOfConsecutiveValues > numberArray.length) {
+    return null;
+  }
+
+  let maximumSum = 0;
+  let temporarySum = 0;
+
+  for (let i = 0; i < numberOfConsecutiveValues; i++) {
+    /*i is less than numberOfConsecutiveValue cause array are 0 indexed*/
+    temporarySum += numberArray[i];
+  }
+  maximumSum = temporarySum;
+
+  for (let i = numberOfConsecutiveValues; i < numberArray.length; i++) {
+    temporarySum =
+      temporarySum +
+      numberArray[i] -
+      numberArray[i - numberOfConsecutiveValues];
+    maximumSum = Math.max(temporarySum, maximumSum);
+  }
+  return maximumSum;
+}
+
+console.log(
+  "The largest consecutive sum log: ",
+  maxSubarraySum([1, 8, 1, 2, 3, 5, 2, 0], 2)
+);
+
+
+
+          </pre>
+          <p class="text">
+            After immediately getting rid of edge case scenario, we have 2
+            placeholder, maximumSum and temporarySum. The first for loop will
+            run one less times the number of Consecutive values required cause
+            arrays are zero indexed, resulting is running twice when 3 is
+            specified which is exactly what we want. We add all the values up to
+            that index in the temporary variable. We then assign maxumumSum to
+            be the temporarySum and run the loop again, but this time our
+            starting index will be the specified consecutive count. We now
+            subtract the value before the current item and add value that's
+            after the item and check for largest among temporary and maximum
+            sum. We return the maximum sum at the end.
+          </p>
+        </section>
+        <section class="section">
+          <h2 class="heading__secondary">Recursion</h2>
+          <p class="text">
+            A recursive function is a function that calls itself. In javascript,
+            function calls are handled by a callstack which pushes and pops the
+            most recent function from the stack. If a function relies on a
+            function inside it. The callstack will put the previous function at
+            the bottom of the stack and keep pushing every function whose values
+            are relied on top of it. Once all the dependency(functions) are
+            returned the initial function can now resolve. Recursive functions
+            are different as it keeps calling itself unless a certain criterea
+            is met. So the important thing to have in a recursive function are :
+            a base case exit the function, and having the same function call
+            itself with different input.
+          </p>
+          <pre class="code">
+function addAllNumbersBetweenOneTo(n) {
+  if (n === 1) return 1;
+  return n + addAllNumbersBetweenOneTo(n - 1);
+}
+
+console.log(
+  "The sum of all numbers between 1 to 5 is",
+  addAllNumbersBetweenOneTo(5)
+);
+
+//visual explainination
+/*
+addAllNumbersBetweenOneTo(5)
+
+is 5 equal to 1? no so keep going
+
+return 5 + addAllNumbersBetweenOneTo(4)
+
+is 4 equal to 1? no so keep going
+
+return 4 + addAllNumbersBetweenOneTo(3)
+
+is 3 equal to 1? no so keep going
+
+return 3 + addAllNumbersBetweenOneTo(2)
+
+is 2 equal to 1? no so keep going
+
+return 2 + addAllNumbersBetweenOneTo(1)
+
+is 1 equal to 1? Yes! so return 1
+
+return 2 + 1
+
+//lets see one simple example
+
+we now know addAllNumbersBetweenOneTo(1) = 1
+
+addAllNumbersBetweenOneTo(2)= 2 + addAllNumbersBetweenOneTo(2-1) 
+                            = 2+1
+                            = 3
+
+addAllNumbersBetweenOneTo(3)= 3 + addAllNumbersBetweenOneTo(3-1) 
+                            = 3 + addAllNumbersBetweenOneTo(2) 
+                            = 3 + 3
+                            = 6
+
+//you can work your way upwards in this way
+*/
+            
+          </pre>
+          <p class="text">
+            Lets write a factorial function using recursion. Lets look at a
+            simple example first: factorial(5). This function will calculate
+            5*4*3*2*1 , here 1 is our base case and each recursion deals with
+            the factorial of given number - 1. Here's how that translates into
+            code.
+          </p>
+          <pre class="code">
+function recursiveFactorial(n) {
+  //base case of 1
+  if (n === 1) return 1;
+  //changing input
+  return n * recursiveFactorial(n - 1);
+}
+
+console.log(
+  "Factorial of 5 using recursive function is: ",
+  recursiveFactorial(5)
+);
+          </pre>
+          <p class="text">
+            The most important thing to go through while creating a recursive
+            function is to have a base return and making sure your input keeps
+            changing and will hit the base case. Else, you'll hit Stack Overflow
+            as your function keeps going on.
+          </p>
+        </section>
       </main>
     </div>
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.5.0/build/highlight.min.js"></script>
