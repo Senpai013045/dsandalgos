@@ -320,3 +320,52 @@ function productOfArray(arr) {
 }
 
 console.log("the product of [1,2,3,4,5] is: ", productOfArray([1, 2, 3, 4, 5]));
+
+//searching
+
+//linear search
+
+function linearSearch(arr, valueToFind) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === valueToFind) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+console.log(
+  "Linear searching :",
+  linearSearch(["alpha", "beta", "gamma", "delta"], "gamma")
+);
+
+//binary search
+
+function binarySearch(arr, val) {
+  let start = 0;
+  let end = arr.length - 1;
+  let mid = Math.floor((start + end) / 2);
+
+  while (start <= end) {
+    if (val === arr[mid]) {
+      // if found
+      return mid;
+    }
+    if (val < arr[mid]) {
+      // search left side
+      end = mid - 1;
+    }
+    if (val > arr[mid]) {
+      // search right side
+      start = mid + 1;
+    }
+    //recalculate mid
+    mid = Math.floor((start + end) / 2);
+  }
+  return val === arr[mid] ? mid : -1;
+}
+
+console.log(
+  "Binary search: ",
+  binarySearch([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6)
+);

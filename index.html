@@ -458,6 +458,76 @@ function productOfArray(arr) {
 console.log("the product of [1,2,3,4,5] is: ", productOfArray([1, 2, 3, 4, 5]));
           </pre>
         </section>
+        <section class="section">
+          <h2 class="heading__secondary">
+            Searching algorithms: Linear Search
+          </h2>
+          <p class="text">
+            The built in javascript array methods like
+            ".find()",".includes()",".indexOf()" all use something called linear
+            search algorithm. These algorithms check each value inside a loop so
+            its o(n) time complexity. Let's try and recreate a function similar
+            to ".indexOf()" ourselves.
+          </p>
+          <pre class="code">
+function linearSearch(arr, valueToFind) {
+  for (let i = 0; i < arr.length; i++) {
+    if (arr[i] === valueToFind) {
+      return i;
+    }
+  }
+  return -1;
+}
+
+console.log(
+  "Linear seacrhing :",
+  linearSearch(["alpha", "beta", "gamma", "delta"], "gamma")
+);
+          </pre>
+          <h2 class="heading__secondary">Binary Search</h2>
+          <p class="text">
+            We can use something called binary search to be more effective at
+            searching arrays but it will only work on sorted arrays. It's a
+            divide and conquer strategy. We take the start and end of array,
+            calculated middle point, and check if that middle value is what
+            we're looking for. If it's not the target we're looking for, we
+            check if its greater or smaller than the middle's value. If the
+            value we're looking for is small, we decrement our end point to be
+            the current middle. If its greater than what wer're looking for, we
+            move our start point to the middle. Finally, we recalculate the
+            middle point again and check untill the start point and end point's
+            become same.
+          </p>
+          <pre class="code">
+function binarySearch(arr, val) {
+  let start = 0;
+  let end = arr.length - 1;
+  let mid = Math.floor((start + end) / 2);
+
+  while (start <= end) {
+    if (val === arr[mid]) {
+      // if found
+      return mid;
+    }
+    if (val < arr[mid]) {
+      // search left side
+      end = mid - 1;
+    }
+    if (val > arr[mid]) {
+      // search right side
+      start = mid + 1;
+    }
+    //recalculate mid
+    mid = Math.floor((start + end) / 2);
+  }
+  return val === arr[mid] ? mid : -1;
+}
+
+console.log(
+  "Binary search: ",
+  binarySearch([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6)
+          </pre>
+        </section>
       </main>
     </div>
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.5.0/build/highlight.min.js"></script>
