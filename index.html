@@ -527,6 +527,55 @@ console.log(
   "Binary search: ",
   binarySearch([1, 2, 3, 4, 5, 6, 7, 8, 9, 10], 6)
           </pre>
+          <p class="text">
+            Lets look at strings. How would you normally write a function that
+            takes in a long string and a short string and gives you the index at
+            which it finds the short string inside the long string?
+          </p>
+          <pre class="code">
+            //string search naive approach
+
+function serachString(long, short) {
+  for (let i = 0; i < long.length; i++) {
+    for (let j = 0; j < short.length; j++) {
+      if (short[j] !== long[i + j]) break;
+      if (j === short.length - 1) {
+        return i;
+      }
+    }
+  }
+}
+
+console.log(
+  "Finding index using linear search the naive approach: ",
+  serachString("bigchungus", "gc")
+);
+
+//lets take a look at how the loop is working using the example
+
+//bigchungus //long string
+//  gc       //short string
+
+/*
+on first iteration i=0;j=0;
+g===b? no, break
+on second iteration i=1;j=0;
+is g===i no,break
+on third iteration i=2;j=0;
+is g===b yes dont break, keep the inner loop running 
+is j===short.length-1 no,do nothing
+next iteration i=2,j=1
+is c===c(long[2+1])? yes dont break
+is j===short.length-1....holy poop! yes... return i then
+
+since i=2
+
+that's returned and the function ends and everyone's happy
+
+else the loop goes to the end and since foundIndex=-1 is untouched....that's returned
+
+*/
+          </pre>
         </section>
       </main>
     </div>
