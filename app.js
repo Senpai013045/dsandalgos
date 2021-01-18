@@ -412,3 +412,121 @@ that's returned and the function ends and everyone's happy
 else the loop goes to the end and since foundIndex=-1 is untouched....that's returned
 
 */
+
+//bubble sort
+
+//swapping function
+
+const swap = (arr, index1, index2) => {
+  [arr[index1], arr[index2]] = [arr[index2], arr[index1]];
+};
+
+function bubbleSort(arr) {
+  let noSwappingDone;
+  for (let i = arr.length; i > 0; i--) {
+    noSwappingDone = true;
+    for (let j = 0; j < i - 1; j++) {
+      console.log(`Comparing ${arr[j]} and ${arr[j + 1]}`);
+      if (arr[j] > arr[j + 1]) {
+        swap(arr, j, j + 1);
+        noSwappingDone = false;
+      }
+    }
+    console.log("One iteration complete, current array status: ", arr);
+    if (noSwappingDone) {
+      console.log("no swapping has been done hence breaking the loop");
+      break;
+    }
+  }
+  return arr;
+}
+
+let sampleArray = [8, 1, 2, 3, 4];
+console.log("---------------------------------------------------------\n");
+console.log("Bubble sorting the array: ", sampleArray);
+console.log("Bubble sorted: ", bubbleSort(sampleArray));
+console.log("---------------------------------------------------------\n");
+
+//selection sort
+
+function selectionSort(arr) {
+  for (i = 0; i < arr.length; i++) {
+    let lowest = i;
+    console.log("lowest value", arr[lowest], "initialized at index", lowest);
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[lowest]) {
+        console.log(
+          "new lowest value",
+          arr[j],
+          "found at index",
+          j,
+          "lowest value set"
+        );
+        lowest = j;
+      }
+    }
+    if (i !== lowest) {
+      console.log(
+        "the initial value",
+        arr[i],
+        "at index",
+        i,
+        "is found different than computed value",
+        arr[lowest],
+        "found at",
+        lowest,
+        "SWAPPING"
+      );
+      swap(arr, i, lowest);
+    }
+    console.log("Current array status: ", arr);
+  }
+  return arr;
+}
+
+let sampleArray2 = [3, 5, 1, 0, 9];
+
+console.log("---------------------------------------------------------\n");
+console.log("Selection sorting: ", sampleArray2);
+console.log("Selection sorted: ", selectionSort(sampleArray2));
+console.log("---------------------------------------------------------\n");
+
+//insertion sort
+
+function insertionSort(arr) {
+  //assume first element is already sorted so start from index of 1
+
+  for (let i = 1; i < arr.length; i++) {
+    console.log("initialized outer loop");
+    let currentValue = arr[i];
+    console.log("currentValue is: ", currentValue);
+    console.log(
+      "condition: is the value before",
+      currentValue,
+      "greater?",
+      arr[i - 1] > currentValue
+    );
+    for (let j = i - 1; j >= 0 && arr[j] > currentValue; j--) {
+      console.log("initialized inner loop, j: ", j);
+      arr[j + 1] = arr[j];
+      console.log(
+        "value at index",
+        j + 1 + "",
+        "will be the same as value at index",
+        "" + j,
+        "-->",
+        arr
+      );
+      arr[j] = currentValue;
+      console.log("current value is assigned to j:", j, arr);
+    }
+  }
+  return arr;
+}
+
+let sampleArray3 = [5, 4, 3, 6];
+
+console.log("---------------------------------------------------------\n");
+console.log("Insertion sorting: ", sampleArray3);
+console.log("Insertion sorted: ", insertionSort(sampleArray3));
+console.log("---------------------------------------------------------\n");

@@ -581,6 +581,175 @@ else the loop goes to the end and since foundIndex=-1 is untouched....that's ret
         </pre
           >
         </section>
+        <section class="section">
+          <h2 class="heading__secondary">Sorting Algotithms: Bubble sort</h2>
+          <p class="text">
+            Bubble sort is a type of sorting algorithm that loops over the array
+            over and over again while putting the greatest values at the end. We
+            also have to get the idea of swapping to better understand it. For
+            this algorithm I'm putting a lot of console logs to help better
+            understand it.
+          </p>
+          <pre class="code">
+const swap = (arr, index1, index2) => {
+  [arr[index1], arr[index2]] = [arr[index2], arr[index1]];
+};
+
+function bubbleSort(arr) {
+  let noSwappingDone;
+  for (let i = arr.length; i > 0; i--) {
+    noSwappingDone = true;
+    for (let j = 0; j < i - 1; j++) {
+      console.log(`Comparing ${arr[j]} and ${arr[j + 1]}`);
+      if (arr[j] > arr[j + 1]) {
+        swap(arr, j, j + 1);
+        noSwappingDone = false;
+      }
+    }
+    console.log("One iteration complete, current array status: ", arr);
+    if (noSwappingDone) {
+      console.log("no swapping has been done hence breaking the loop");
+      break;
+    }
+  }
+  return arr;
+}
+
+let sampleArray = [8, 1, 2, 3, 4];
+console.log("---------------------------------------------------------\n");
+console.log("Bubble sorting the array: ", sampleArray);
+console.log("Bubble sorted: ", bubbleSort(sampleArray));
+console.log("---------------------------------------------------------\n");
+          </pre>
+          <p class="text">
+            This algorith could be a lot shorter without optimization. But this
+            is more fleshed out version. We're creating a "swap" function to
+            help us out on the top. The "noSwappingDone" variable keeps track of
+            wheather any swapping has been done on current iteration. If no
+            swapping is done,it will break the loop as we can safely say it's
+            been sorted. The outer loop is a reverse loop whose value will keep
+            shrinking as our algorithm will have placed the greatest value found
+            in the inner iteration to the end of the array in each iteration.
+            Since the outer loop ends at i=1, we're using
+            <code class="inlinecode"> j < i-1 </code> as our condition in the
+            inner loop to iterate through arr[j].
+          </p>
+        </section>
+        <section class="section">
+          <h2 class="heading__secondary">Selection sort</h2>
+          <p class="text">
+            Selection sort is another is another algorithm that runs two loops.
+            The outer loop will iterate over every elemnts in the array. And
+            while doing so, will assume the first element in the array is
+            smallest value. Then an inner loop will run from the position of one
+            greater than the outer loop's iteration till the end of array. In
+            such configuration. Every first element in the outer iteration will
+            be compared against every other elements through the inner iteration
+            and index at which the lowest value is found will be remembered.
+            Finally we check if the lowest value in the current outer iteration
+            is not found to be the current iteration index, we swap the values
+            between the current iteration and the index of lowest value found.
+            Here's how it translate to code.
+          </p>
+          <pre class="code">
+function selectionSort(arr) {
+  for (i = 0; i < arr.length; i++) {
+    let lowest = i;
+    console.log("lowest value", arr[lowest], "initialized at index", lowest);
+    for (let j = i + 1; j < arr.length; j++) {
+      if (arr[j] < arr[lowest]) {
+        console.log(
+          "new lowest value",
+          arr[j],
+          "found at index",
+          j,
+          "lowest value set"
+        );
+        lowest = j;
+      }
+    }
+    if (i !== lowest) {
+      console.log(
+        "the initial value",
+        arr[i],
+        "at index",
+        i,
+        "is found different than computed value",
+        arr[lowest],
+        "found at",
+        lowest,
+        "SWAPPING"
+      );
+      swap(arr, i, lowest);
+    }
+    console.log("Current array status: ", arr);
+  }
+  return arr;
+}
+
+let sampleArray2 = [3, 5, 1, 0, 9];
+
+console.log("---------------------------------------------------------\n");
+console.log("Selection sorting: ", sampleArray2);
+console.log("Selection sorted: ", selectionSort(sampleArray2));
+console.log("---------------------------------------------------------\n");
+          </pre>
+          <p class="text">
+            The only advantage it has over bubble sort is that it's swapping
+            less frequently than bubble sort.
+          </p>
+        </section>
+        <section class="section">
+          <h2>Insertion sort</h2>
+          <p class="text">
+            Insertion sort is another sorting algorithm with nested loop. It
+            starts by looping an array with
+            <code class="inlinecode">i=1</code>, storing the value at that
+            position and a second loop that reverse loops through
+            <code class="inlinecode">j=i-1</code>, comparing and sliding the
+            values down intill either it reaches 0 or it stops finding values
+            that are greater. Finally it inserts that stored value at j.
+          </p>
+          <pre class="code">
+function insertionSort(arr) {
+  //assume first element is already sorted so start from index of 1
+
+  for (let i = 1; i < arr.length; i++) {
+    console.log("initialized outer loop");
+    let currentValue = arr[i];
+    console.log("currentValue is: ", currentValue);
+    console.log(
+      "condition: is the value before",
+      currentValue,
+      "greater?",
+      arr[i - 1] > currentValue
+    );
+    for (let j = i - 1; j >= 0 && arr[j] > currentValue; j--) {
+      console.log("initialized inner loop, j: ", j);
+      arr[j + 1] = arr[j];
+      console.log(
+        "value at index",
+        j + 1 + "",
+        "will be the same as value at index",
+        "" + j,
+        "-->",
+        arr
+      );
+      arr[j] = currentValue;
+      console.log("current value is assigned to j:", j, arr);
+    }
+  }
+  return arr;
+}
+
+let sampleArray3 = [5, 4, 3, 6];
+
+console.log("---------------------------------------------------------\n");
+console.log("Insertion sorting: ", sampleArray3);
+console.log("Insertion sorted: ", insertionSort(sampleArray3));
+console.log("---------------------------------------------------------\n");
+          </pre>
+        </section>
       </main>
     </div>
     <script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@10.5.0/build/highlight.min.js"></script>
